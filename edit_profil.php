@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Dimitri
- * Date: 17/06/2015
- * Time: 10:16
- */
-
 session_start();
 include("classe/DbConnect.php");
 include("classe/User.php");
 $user = new User($_SESSION['id_session']);
-
+if (isset($_POST['submitModify']) && $_POST['submitModify'])
+    $user->EditProfil($_SESSION['id_session'], $_POST['prenom'], $_POST['nom'], $_POST['pseudo'], $_POST['password'], $_POST['email'], 'img_src');
+    $user->GetInfosUser($_SESSION['id_session']);
 ?>
 
 <!DOCTYPE HTML>
@@ -26,7 +21,7 @@ $user = new User($_SESSION['id_session']);
           content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="js/bootstrap.min.js"></script>
 </head>
@@ -35,6 +30,7 @@ $user = new User($_SESSION['id_session']);
 
 <div class="container">
     <h1>Modifier son profil</h1>
+
     <form action="edit_profil.php" method="post">
         <div class="form-group">
             <label for="image">Image de profil</label>
@@ -42,25 +38,30 @@ $user = new User($_SESSION['id_session']);
         </div>
         <div class="form-group">
             <label for="nom">Nom</label>
-            <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="<?php echo $user->getNom(); ?>">
+            <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom"
+                   value="<?php echo $user->getNom(); ?>">
         </div>
         <div class="form-group">
             <label for="prenom">Prenom</label>
-            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="<?php echo $user->getPrenom(); ?>">
+            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom"
+                   value="<?php echo $user->getPrenom(); ?>">
         </div>
         <div class="form-group">
             <label for="pseudo">Pseudo</label>
-            <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" value="<?php echo $user->getPseudo(); ?>">
+            <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo"
+                   value="<?php echo $user->getPseudo(); ?>">
         </div>
         <div class="form-group">
             <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" value="<?php echo $user->getPassword(); ?>">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe"
+                   value="<?php echo $user->getPassword(); ?>">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $user->getEmail(); ?>">
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email"
+                   value="<?php echo $user->getEmail(); ?>">
         </div>
-        <button type="submit" class="btn btn-default">Modifier</button>
+        <input type="submit" name="submitModify" value="Modifier" class="btn btn-default"/>
     </form>
 </div>
 </body>

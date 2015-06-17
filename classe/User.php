@@ -39,6 +39,26 @@ class User {
         $this->active = $result[0]->active;
     }
 
+    public function GetInfosUser($id_user)
+    {
+        $connect_bd = new DbConnect();
+
+        $sql = "SELECT * FROM users WHERE id_user = '$id_user'";
+        $resultat = $connect_bd->connect->query($sql);
+        $result = $resultat->fetchAll(PDO::FETCH_OBJ);
+
+        $this->id_user = $result[0]->id_user;
+        $this->prenom = $result[0]->prenom;
+        $this->nom = $result[0]->nom;
+        $this->pseudo = $result[0]->pseudo;
+        $this->pseudo = $result[0]->pseudo;
+        $this->password = $result[0]->password;
+        $this->email = $result[0]->email;
+        $this->img_src = $result[0]->img_src;
+        $this->droit = $result[0]->droit;
+        $this->active = $result[0]->active;
+    }
+
     public function GetFisrtLastName()
     {
         return $this->prenom."  ".$this->nom;
@@ -56,12 +76,13 @@ class User {
             return "Membre simple";
     }
 
-    public function EditProfil($id_user, $prenom, $nom, $pseudo, $password, $email, $img_src, $droit, $active)
+    public function EditProfil($id_user, $prenom, $nom, $pseudo, $password, $email, $img_src)
     {
         $connect_bd = new DbConnect();
 
-        $sql = "UPDATE users SET `nom` = '$nom', `prenom` = '$prenom', `pseudo` = '$pseudo', `password` = '$password', `email` = '$email', `img_src` = '$img_src', `droit` = '$droit', `active` = '$active' WHERE `users`.`id_user` = $id_user;";
-        $resultat = $connect_bd->connect->exec($sql);
+        $sql = "UPDATE users SET nom = '$nom', prenom = '$prenom', pseudo = '$pseudo', password = '$password', email = '$email', img_src = '$img_src' WHERE id_user = $id_user;";
+        echo "test";
+        var_dump($connect_bd->connect->exec($sql));
     }
 
     /**

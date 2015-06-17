@@ -52,13 +52,6 @@ $articles = $db_connect->GetAllArticles();
         <strong>Statut : </strong><?php echo $user->GetStatutUser(); ?>
     </div>
 
-    <div id="bloc_articles">
-        <?php
-            foreach($articles as $row){
-                echo $row->titre_article;
-            }
-        ?>
-    </div>
 </div>
 
 </body>
