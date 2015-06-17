@@ -23,8 +23,7 @@ class User {
     {
         $connect_bd = new DbConnect();
 
-        $sql = "SELECT * FROM users WHERE id_user = '$id_user'";
-        $resultat = $connect_bd->connect->query($sql);
+        $resultat = $connect_bd->GetRequest("SELECT * FROM users WHERE id_user = '$id_user'");
         $result = $resultat->fetchAll(PDO::FETCH_OBJ);
 
         $this->id_user = $result[0]->id_user;
@@ -43,8 +42,7 @@ class User {
     {
         $connect_bd = new DbConnect();
 
-        $sql = "SELECT * FROM users WHERE id_user = '$id_user'";
-        $resultat = $connect_bd->connect->query($sql);
+        $resultat = $connect_bd->GetRequest("SELECT * FROM users WHERE id_user = '$id_user'");
         $result = $resultat->fetchAll(PDO::FETCH_OBJ);
 
         $this->id_user = $result[0]->id_user;
@@ -79,10 +77,7 @@ class User {
     public function EditProfil($id_user, $prenom, $nom, $pseudo, $password, $email, $img_src)
     {
         $connect_bd = new DbConnect();
-
-        $sql = "UPDATE users SET nom = '$nom', prenom = '$prenom', pseudo = '$pseudo', password = '$password', email = '$email', img_src = '$img_src' WHERE id_user = $id_user;";
-        echo "test";
-        var_dump($connect_bd->connect->exec($sql));
+        $connect_bd->ExecRequest("UPDATE users SET nom = '$nom', prenom = '$prenom', pseudo = '$pseudo', password = '$password', email = '$email', img_src = '$img_src' WHERE id_user = $id_user;");
     }
 
     /**

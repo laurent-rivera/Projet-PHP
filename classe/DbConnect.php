@@ -9,18 +9,17 @@
 class DbConnect
 {
 
-    public $connect = null;
+    private $host = "localhost";
+    private $login = "root";
+    private $password = "";
+    private $dbname = "projet_php";
+    private $connect = null;
 
 
     function __construct()
     {
-        $host = "localhost";
-        $login = "root";
-        $password = "";
-        $dbname = "projet_php";
-
         try {
-            $this->connect = new PDO("mysql:host=" . $host . ";dbname=" . $dbname . "", $login, $password);
+            $this->connect = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbname . "", $this->login, $this->password);
             // Description des erreurs
             $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //echo "Connexion réussie.<br/>";
@@ -29,17 +28,14 @@ class DbConnect
         }
     }
 
-    public function startSession($pseudo, $password)
+    public function GetRequest($sql)
     {
+        return $this->connect->query($sql);
+    }
 
-        $sql = "SELECT id_user, pseudo, password FROM users WHERE pseudo = '$pseudo' AND password = '$password'";
-        $resultat = $this->connect->query($sql);
-        $result = $resultat->fetchAll(PDO::FETCH_OBJ);
-
-        if ($result == null)
-            return false;
-        else
-            return $_SESSION['id_session'] = $result[0]->id_user;
+    public function ExecRequest($sql)
+    {
+        return $this->connect->exec($sql);
     }
 
     public function GetAllArticles()

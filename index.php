@@ -4,9 +4,16 @@ include("../classe/DbConnect.php");
 include("../classe/User.php");
 $db_connect = new DbConnect();
 if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
-    $db_query = $db_connect->startSession($_POST['pseudo'], $_POST['password']);
-    if ($db_query != false)
+    $pseudo = $_POST['pseudo'];
+    $password = $_POST['password'];
+    $db_query = $db_connect->GetRequest("SELECT id_user, pseudo, password FROM users WHERE pseudo = '$pseudo' AND password = '$password'");
+    $result = $db_query->fetchAll(PDO::FETCH_OBJ);
+    if ($result == null)
+        return false;
+    else {
+        $_SESSION['id_session'] = $result[0]->id_user;
         header('Location: ../profil.php');
+    }
 }
 if (isset($_SESSION['id_session']))
     $user_recup = new User($_SESSION['id_session']);
@@ -27,7 +34,7 @@ $articles = $db_connect->GetAllArticles();
     <title>Projet PHP</title>
 
     <!-- Fichier CSS principal -->
-    <link href="bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap.css" rel="stylesheet">
     <link href="jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -54,7 +61,7 @@ $articles = $db_connect->GetAllArticles();
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Projet PHP</a>
+            <a class="navbar-brand" href="index.php">Projet PHP</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form action="index.php" method="post" class="navbar-form navbar-right">
