@@ -1,0 +1,59 @@
+#article{
+    width: 80%;
+    background-color: rgba(0, 0, 255, 0.5);
+    margin: 30px auto auto;
+    height: 1000px;
+    border: 18px solid black;
+}
+
+
+body{
+background:url(village.jpg) no-repeat fixed center;
+}
+
+#menu{
+background-color:transparent;
+width:80%;
+height:20%;
+margin:auto;
+}
+
+ul{
+color:white;
+font-size: 30px;
+text-align: center;
+font-family: phosphate;
+padding-top:70px;
+}
+
+.connexion > a {
+    text-decoration: none;
+    color: #FFF;
+    float: right;
+    margin-right: 20px;
+    font-size: 18px;
+    font-family: phosphate;
+    margin-top: 10px;
+}
+
+
+.connexion > a:hover{
+color:gold;
+font-family:phosphate;
+font-size:18px;
+}
+
+#title{
+margin: auto;
+font-family: superclarendon;
+text-align: center;
+border: 2px solid #000;
+background: #000 none repeat scroll 0% 0%;
+color: #FFF;
+font-size: 35px;
+width: 100%;
+margin-left: -1%;
+margin-top: -9px;
+padding-top: 55px;
+padding-right: 18px;
+}
