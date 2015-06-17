@@ -39,9 +39,29 @@ class User {
         $this->active = $result[0]->active;
     }
 
-    public function GetInfosUser($id_user)
+    public function GetFisrtLastName()
     {
-        return $this->getPrenom()." - ".$this->email;
+        return $this->prenom."  ".$this->nom;
+    }
+
+    public function GetStatutUser()
+    {
+        // 1 Modification Article autorisé - 0 Modification Article non autorisé
+        // 1 Modifications Users autorisé - 0 Modification Users non autorisé
+        if($this->droit == 11)
+            return "Admin";
+        elseif($this->droit == 10)
+            return "Auteur";
+        elseif($this->droit == 00)
+            return "Membre simple";
+    }
+
+    public function EditProfil($id_user, $prenom, $nom, $pseudo, $password, $email, $img_src, $droit, $active)
+    {
+        $connect_bd = new DbConnect();
+
+        $sql = "UPDATE users SET `nom` = '$nom', `prenom` = '$prenom', `pseudo` = '$pseudo', `password` = '$password', `email` = '$email', `img_src` = '$img_src', `droit` = '$droit', `active` = '$active' WHERE `users`.`id_user` = $id_user;";
+        $resultat = $connect_bd->connect->exec($sql);
     }
 
     /**

@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Dimitri
  * Date: 16/06/2015
  * Time: 12:53
  */
-
-class DbConnect {
+class DbConnect
+{
 
     public $connect = null;
 
@@ -35,10 +36,24 @@ class DbConnect {
         $resultat = $this->connect->query($sql);
         $result = $resultat->fetchAll(PDO::FETCH_OBJ);
 
-        if($result == null)
+        if ($result == null)
             return false;
         else
             return $_SESSION['id_session'] = $result[0]->id_user;
+    }
+
+    public function GetAllArticles()
+    {
+        $sql = "SELECT * FROM articles";
+        $resultat = $this->connect->query($sql);
+        return $resultat->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function GetAllUsers()
+    {
+        $sql = "SELECT * FROM users";
+        $resultat = $this->connect->query($sql);
+        return $resultat->fetchAll(PDO::FETCH_OBJ);
     }
 
 }

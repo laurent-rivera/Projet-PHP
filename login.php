@@ -6,17 +6,14 @@ include("classe/DbConnect.php");
 include("classe/User.php");
 
 $db_connect = new DbConnect();
-$db_query = $db_connect->startSession($_POST['pseudo'], $_POST['password']);
 
-$user_recup = new User($_SESSION['id_session']);
-//$infos_user = $user_recup->GetInfosUser($_SESSION['id_session']);
-
-var_dump($db_query);
-var_dump($user_recup);
-//var_dump($infos_user);
-
-if($db_query != false)
-    header('Location: profil.php');
+if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
+    $db_query = $db_connect->startSession($_POST['pseudo'], $_POST['password']);
+    if ($db_query != false)
+        header('Location: profil.php');
+}
+if (isset($_SESSION['id_session']))
+    $user_recup = new User($_SESSION['id_session']);
 ?>
 
 <!DOCTYPE HTML>
@@ -26,8 +23,10 @@ if($db_query != false)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.">
-    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+    <meta name="description"
+          content="Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.">
+    <meta name="keywords"
+          content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">

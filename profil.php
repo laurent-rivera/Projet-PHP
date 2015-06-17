@@ -1,13 +1,10 @@
 <?php
-
 session_start();
-
 include("classe/DbConnect.php");
 include("classe/User.php");
-
 $user = new User($_SESSION['id_session']);
-$infos_user = $user->GetInfosUser($_SESSION['id_session']);
-
+$db_connect = new DbConnect();
+$articles = $db_connect->GetAllArticles();
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -23,14 +20,44 @@ $infos_user = $user->GetInfosUser($_SESSION['id_session']);
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="js/bootstrap.min.js"></script>
-
 </head>
 
 <body>
 
 <div class="container">
+
+    <a href="logout.php">Déconnexion</a>
+
+    <?php
+    if($user->getDroit() == 11){
+        echo '<ul>
+        <li><a href="edit_profil.php">Editer profil</a></li>
+        <li><a href="manage_users.php">Gestion utilisateur</a></li>
+        <li><a href="manage_articles.php">Gestion Articles</a></li>
+    </ul>';
+    }elseif($user->getDroit() == 10){
+        echo '<ul>
+    <li><a href="edit_profil.php">Editer profil</a></li>
+    <li><a href="manage_articles.php">Gestion Articles</a></li>
+</ul>';
+    }else{
+        echo '<ul>
+    <li><a href="edit_profil.php">Editer profil</a></li>
+</ul>';
+    }
+    ?>
+
     <div id="bloc_profil">
-        <?php echo $user->GetInfosUser($_SESSION['id_session']); ?>
+        <strong>Nom : </strong><?php echo $user->GetFisrtLastName(); ?><br>
+        <strong>Statut : </strong><?php echo $user->GetStatutUser(); ?>
+    </div>
+
+    <div id="bloc_articles">
+        <?php
+            foreach($articles as $row){
+                echo $row->titre_article;
+            }
+        ?>
     </div>
 </div>
 
