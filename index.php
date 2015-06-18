@@ -1,8 +1,9 @@
 <?php
 session_start();
-include("../classe/DbConnect.php");
-include("../classe/User.php");
+include("classe/DbConnect.php");
+include("classe/User.php");
 $db_connect = new DbConnect();
+if(isset($_SESSION['id_session'])){
 if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
     $pseudo = $_POST['pseudo'];
     $password = $_POST['password'];
@@ -12,12 +13,13 @@ if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
         return false;
     else {
         $_SESSION['id_session'] = $result[0]->id_user;
-        header('Location: ../profil.php');
+        header('Location: profil.php');
     }
 }
 if (isset($_SESSION['id_session']))
     $user_recup = new User($_SESSION['id_session']);
 $user = new User($_SESSION['id_session']);
+}
 $articles = $db_connect->GetAllArticles();
 ?>
 <!DOCTYPE html>
@@ -34,19 +36,10 @@ $articles = $db_connect->GetAllArticles();
     <title>Projet PHP</title>
 
     <!-- Fichier CSS principal -->
-    <link href="../bootstrap.css" rel="stylesheet">
-    <link href="jumbotron.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jumbotron.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]>
-    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -117,9 +110,8 @@ $articles = $db_connect->GetAllArticles();
 ================================================== -->
 <!-- Placés en fin de document pour que la page se charge plus rapidement -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="bootstrap.min.js"></script>
-<script src="collapse.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/collapse.js"></script>
 
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

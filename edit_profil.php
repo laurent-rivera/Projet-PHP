@@ -23,6 +23,7 @@ if (isset($_POST['submitModify']) && $_POST['submitModify'])
 
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/index.css">
     <script src="js/bootstrap.min.js"></script>
 </head>
 

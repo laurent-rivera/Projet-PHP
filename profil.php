@@ -1,5 +1,6 @@
 <?php
 session_start();
+if (!isset($_SESSION['id_session'])){
 include("classe/DbConnect.php");
 include("classe/User.php");
 $user = new User($_SESSION['id_session']);
@@ -17,22 +18,13 @@ $articles = $db_connect->GetAllArticles();
     <meta name="author" content="Laurent Rivera & Dimitri Sandron">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Projet PHP</title>
+    <title>Projet PHP - Profil</title>
 
     <!-- Fichier CSS principal -->
-    <link href="bootstrap.css" rel="stylesheet">
-    <link href="jumbotron.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jumbotron.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]>
-    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -47,7 +39,7 @@ $articles = $db_connect->GetAllArticles();
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="jumbotron/index.php">Projet PHP</a>
+            <a class="navbar-brand" href="index.php">Projet PHP</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse navbar-right" style="color:#fff">
             <?php echo "Bonjour ".$user->GetFisrtLastName(); ?>
@@ -90,3 +82,57 @@ $articles = $db_connect->GetAllArticles();
 
 </html>
 
+<?php }else{ ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Ces trois balises meta doivent être placés en première, tout le contenu suivant vient après -->
+    <meta name="description" content="Projet PHP en cours de développement">
+    <meta name="author" content="Laurent Rivera & Dimitri Sandron">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Projet PHP - Profil</title>
+
+    <!-- Fichier CSS principal -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jumbotron.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.php">Projet PHP</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right" style="color:#fff">
+
+</div>
+<!--/.navbar-collapse -->
+</div>
+</nav>
+
+<div class="container">
+
+    <div id="bloc_profil">
+        Veuillez vous connecter <a href="login.php">ici</a>
+    </div>
+
+</div>
+
+</body>
+
+</html>
+<?php } ?>
