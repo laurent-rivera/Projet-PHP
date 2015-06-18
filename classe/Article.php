@@ -27,6 +27,13 @@ class Article {
         $this->titre_article = $titre_article;
     }
 
+
+    public function AddArticle($titre, $contenu, $auteur)
+    {
+        $connect_bd = new DbConnect();
+        $connect_bd->ExecRequest("INSERT INTO articles (`id_article`, `titre_article`, `img_src_article`, `contenu_article`, `date_add`, `active`, `id_user`) VALUES (NULL, '$titre', 'village.jpg', '$contenu', NOW(), '1', '$auteur');");
+    }
+
     /**
      * @return mixed
      */

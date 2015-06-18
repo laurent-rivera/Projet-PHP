@@ -1,26 +1,30 @@
 <?php
-session_start();
+
 include("classe/DbConnect.php");
 include("classe/User.php");
 $db_connect = new DbConnect();
+
+session_start();
+
+$articles = $db_connect->GetLastArticles();
+
 if(isset($_SESSION['id_session'])){
-if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
-    $pseudo = $_POST['pseudo'];
-    $password = $_POST['password'];
-    $db_query = $db_connect->GetRequest("SELECT id_user, pseudo, password FROM users WHERE pseudo = '$pseudo' AND password = '$password'");
-    $result = $db_query->fetchAll(PDO::FETCH_OBJ);
-    if ($result == null)
-        return false;
-    else {
-        $_SESSION['id_session'] = $result[0]->id_user;
-        header('Location: profil.php');
+    $user_recup = new User($_SESSION['id_session']);
+    $user = new User($_SESSION['id_session']);
+}else{
+    if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
+        $pseudo = $_POST['pseudo'];
+        $password = $_POST['password'];
+        $db_query = $db_connect->GetRequest("SELECT id_user, pseudo, password FROM users WHERE pseudo = '$pseudo' AND password = '$password'");
+        $result = $db_query->fetchAll(PDO::FETCH_OBJ);
+        if ($result == null)
+            return false;
+        else {
+            $_SESSION['id_session'] = $result[0]->id_user;
+            header('Location: profil.php');
+        }
     }
 }
-if (isset($_SESSION['id_session']))
-    $user_recup = new User($_SESSION['id_session']);
-$user = new User($_SESSION['id_session']);
-}
-$articles = $db_connect->GetAllArticles();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -57,6 +61,10 @@ $articles = $db_connect->GetAllArticles();
             <a class="navbar-brand" href="index.php">Projet PHP</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+            <?php if(isset($_SESSION['id_session'])){ 
+                echo '<div class="navbar-right" style="color:#fff;margin-top:15px;">'.$user->getPrenom()." ".$user->getNom().'</div>';
+                echo '<a class="navbar-right" href="logout.php">Déconnexion</a>';
+            } else { ?>
             <form action="index.php" method="post" class="navbar-form navbar-right">
                 <div class="form-group">
                     <input type="text" name="pseudo" placeholder="Identifiant" class="form-control">
@@ -66,6 +74,7 @@ $articles = $db_connect->GetAllArticles();
                 </div>
                 <input type="submit" name="btn_login" value="Connexion" class="btn btn-success"/>
             </form>
+            <?php } ?>
         </div>
         <!--/.navbar-collapse -->
     </div>
@@ -86,11 +95,12 @@ $articles = $db_connect->GetAllArticles();
 <div class="container">
 
     <div class="row">
+        <div><h2>Les derniers articles</h2></div>
         <?php foreach ($articles as $row) { ?>
             <div class="col-md-4">
-                <h2><?php echo $row->titre_article ?></h2>
+                <h2><?php echo $row->titre_article; ?></h2>
 
-                <p><?php echo $row->contenu_article ?></p>
+                <p><?php echo substr($row->contenu_article, 0, 40); ?></p>
 
                 <p><a class="btn btn-default" href="#" role="button">Voir plus &raquo;</a></p>
             </div>

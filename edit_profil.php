@@ -29,6 +29,37 @@ if (isset($_POST['submitModify']) && $_POST['submitModify'])
 
 <body>
 
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.php">Projet PHP</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <?php if(isset($_SESSION['id_session'])){ 
+                echo '<div class="navbar-right" style="color:#fff;margin-top:15px;">'.$user->getPrenom()." ".$user->getNom().'</div>';
+            } else { ?>
+            <form action="index.php" method="post" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" name="pseudo" placeholder="Identifiant" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Mot de passe" class="form-control">
+                </div>
+                <input type="submit" name="btn_login" value="Connexion" class="btn btn-success"/>
+            </form>
+            <?php } ?>
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</nav>
+
 <div class="container">
     <h1>Modifier son profil</h1>
 

@@ -40,7 +40,14 @@ class DbConnect
 
     public function GetAllArticles()
     {
-        $sql = "SELECT * FROM articles";
+        $sql = "SELECT * FROM articles ar LEFT JOIN users us ON ar.id_user = us.id_user ORDER BY id_article DESC";
+        $resultat = $this->connect->query($sql);
+        return $resultat->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function GetLastArticles()
+    {
+        $sql = "SELECT * FROM articles ORDER BY id_article DESC LIMIT 3";
         $resultat = $this->connect->query($sql);
         return $resultat->fetchAll(PDO::FETCH_OBJ);
     }
@@ -50,6 +57,12 @@ class DbConnect
         $sql = "SELECT * FROM users";
         $resultat = $this->connect->query($sql);
         return $resultat->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function AddArticle($titre, $contenu, $auteur)
+    {
+        $connect_bd = new DbConnect();
+        $connect_bd->ExecRequest("INSERT INTO articles (`id_article`, `titre_article`, `img_src_article`, `contenu_article`, `date_add`, `active`, `id_user`) VALUES (NULL, '$titre', 'village.jpg', '$contenu', NOW(), '1', '$auteur');");
     }
 
 }

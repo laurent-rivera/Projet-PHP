@@ -66,11 +66,9 @@ class User {
     {
         // 1 Modification Article autorisé - 0 Modification Article non autorisé
         // 1 Modifications Users autorisé - 0 Modification Users non autorisé
-        if($this->droit == 11)
+        if($this->droit == 1)
             return "Admin";
-        elseif($this->droit == 10)
-            return "Auteur";
-        elseif($this->droit == 00)
+        elseif($this->droit == 0)
             return "Membre simple";
     }
 
